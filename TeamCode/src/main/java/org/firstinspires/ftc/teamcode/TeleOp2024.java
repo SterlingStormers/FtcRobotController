@@ -101,4 +101,3 @@ if (robot.clawServo.getPosition() >= 1.05) {
         wasClawTogglePressed = isClawTogglePressed;
     }
 }
-
