@@ -97,11 +97,9 @@ if (robot.clawServo.getPosition() >= 1.05) {
        //Set the worm gear tol -7 degrees
 
         if (operator.right_bumper && operator.left_bumper && driver.right_bumper && driver.left_bumper) {
-            if (robot.wormGearAngle() <= -7) {
+            robot.wormGear.setPower(-1);
+            if (robot.wormGearAngle() == -7) {
                 robot.wormGear.setPower(0);
-            }
-            else {
-                robot.wormGear.setPower(-1);
             }
         }
         telemetry.addData("Lift","%.1f", opLeftStickY);
@@ -110,3 +108,4 @@ if (robot.clawServo.getPosition() >= 1.05) {
         wasClawTogglePressed = isClawTogglePressed;
     }
 }
+
