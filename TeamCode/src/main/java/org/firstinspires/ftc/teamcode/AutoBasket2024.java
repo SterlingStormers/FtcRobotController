@@ -55,7 +55,7 @@ public class AutoBasket2024 extends DriveMethods {
             case RaiseArm:
                 robot.wormGear.setPower(0.5);
 
-                if (robot.wormGearAngle() >= 61) {
+                if (robot.wormGearAngle() >= 70) {
                     robot.wormGear.setPower(0);
 
                     changeState(State.MoveForward);
@@ -64,7 +64,7 @@ public class AutoBasket2024 extends DriveMethods {
             case MoveForward:
                 omniDrive(0.15, 0, 0);
 
-                if (getStateTime() >= 1.25) {
+                if (getStateTime() >= 1.1) {
                     omniDrive(0, 0, 0);
                     changeState(State.ExtendSlider);
                 }

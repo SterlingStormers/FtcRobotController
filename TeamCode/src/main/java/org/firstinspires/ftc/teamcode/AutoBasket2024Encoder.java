@@ -5,14 +5,14 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 @Autonomous
-public class AutoBasket2024Encoder extends DriveMethods {
+public class AutoBasket2024Encoder extends DriveMethods{
 
-//    left = hardwareMap.get(DcMotor.class, "leftMotor")
+    left = hardwareMap.get(DcMotor.class, "leftMotor")
 
     int leftPos = 0;
     int rightPos = 0;
 
-//    left.SetMode(DcMotor.RunMode.RUN_TO_POSITION)
+    left.SetMode(DcMotor.RunMode.RUN_TO_POSITION)
 
     double stateStartTime = -1;
 
