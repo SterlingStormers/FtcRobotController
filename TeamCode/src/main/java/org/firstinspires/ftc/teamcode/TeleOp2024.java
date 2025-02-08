@@ -76,9 +76,13 @@ if (robot.clawServo.getPosition() >= 1.05) {
        if (!operator.x) {
             sliderPosition = sliderPosition + 10.0 * opRightStickY;
        } else if (operator.a) {
+<<<<<<< HEAD
+           sliderPosition = robot.MIN_SLIDER_TICKS
+=======
            sliderPosition = robot.MIN_SLIDER_TICKS;
+>>>>>>> parent of 607b8bd (updated autobasket code)
        } else if (operator.right_bumper) {
-           robot.sliderMotor.setPower(0);
+           sliderPosition = robot.sliderMotor.setPower(0);
        } else {
            sliderPosition = robot.MAX_SAFE_SLIDER_TICKS;
         }
@@ -90,11 +94,17 @@ if (robot.clawServo.getPosition() >= 1.05) {
        //Set the worm gear tol -7 degrees
 
         if (operator.right_bumper && operator.left_bumper && driver.right_bumper && driver.left_bumper) {
+<<<<<<< HEAD
+            robot.wormGear.setPower(-1);
+            if (robot.wormGearAngle() == -7) {
+                wormGearPower = 0;
+=======
             if (robot.wormGearAngle() <= -7) {
                 robot.wormGear.setPower(0);
             }
             else {
                 robot.wormGear.setPower(-1);
+>>>>>>> parent of 607b8bd (updated autobasket code)
             }
         }
         telemetry.addData("Lift","%.1f", opLeftStickY);
@@ -103,3 +113,4 @@ if (robot.clawServo.getPosition() >= 1.05) {
         wasClawTogglePressed = isClawTogglePressed;
     }
 }
+
