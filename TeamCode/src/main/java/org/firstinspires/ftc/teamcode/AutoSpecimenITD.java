@@ -49,9 +49,9 @@ public class AutoSpecimenITD extends DriveMethods {
                 break;
 
             case MoveForward:
-                double remainingPos = moveStraightTo(0);
+                double remainingPos = moveStraightTo(0.5334);
 
-                if (Math.abs(remainingPos) <= .01 || remainingPos < 0) {
+                if (Math.abs(remainingPos) <= .01) {
                     omniDrive(0, 0, 0);
                     changeState(State.StrafeLeft);
                 }
@@ -68,22 +68,25 @@ public class AutoSpecimenITD extends DriveMethods {
 
 
             case RaiseArm:
-                robot.wormGear.setPower(0.0);
+                robot.wormGear.setPower(1);
+
+                // make sure to stay still
+                moveStraightTo(0);
 
                 if (robot.wormGearAngle() >= 0) {
                     robot.wormGear.setPower(0);
 
-                    changeState(AutoSpecimenITD.State.ExtendSlider);
+                    changeState(State.ExtendSlider);
                 }
                 break;
 
             case ExtendSlider:
-                robot.sliderMotor.setPower(0.0);
+                robot.sliderMotor.setPower(0.8);
                 robot.sliderMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 setSliderAndReturnConstraint(2700);
 
                 if (robot.sliderMotor.getCurrentPosition() >= 2700) {
-                    changeState(AutoSpecimenITD.State.ExtraMove);
+                    changeState(State.ExtraMove);
                 }
                 break;
 
@@ -91,7 +94,7 @@ public class AutoSpecimenITD extends DriveMethods {
             case ExtraMove:
                 remainingPos = moveStraightTo(0.0);
 
-                if (Math.abs(remainingPos) <= .01 || remainingPos < 0) {
+                if (Math.abs(remainingPos) <= .01) {
                     omniDrive(0, 0, 0);
                     changeState(State.LowerArm);
                 }
@@ -128,7 +131,7 @@ public class AutoSpecimenITD extends DriveMethods {
 
                 if (Math.abs(remaining) <= .01) {
                     omniDrive(0, 0, 0);
-                    changeState(AutoSpecimenITD.State.ExtraLowerArm);
+                    changeState(State.ExtraLowerArm);
                 }
                 break;
 
