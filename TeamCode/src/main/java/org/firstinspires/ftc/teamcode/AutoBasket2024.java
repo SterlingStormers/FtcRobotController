@@ -51,7 +51,7 @@ public class AutoBasket2024 extends DriveMethods {
                 changeState(State.StrafeRight);
                 break;
             case StrafeRight:
-                double remainingDistance = moveStraightTo(.325);
+                double remainingDistance = strafeTo(.325);
 
                 if (Math.abs(remainingDistance) <= .01) {
                     changeState(State.Wait);
@@ -64,7 +64,7 @@ public class AutoBasket2024 extends DriveMethods {
                 }
                 break;
             case MoveForward:
-                double remainingPos = moveStraightTwo(0.175);
+                double remainingPos = moveStraightTo(0.175);
 
                 if (Math.abs(remainingPos) <= .01 || remainingPos < 0) {
                     omniDrive(0, 0, 0);
@@ -96,7 +96,7 @@ public class AutoBasket2024 extends DriveMethods {
                 }
                 break;
             case ExtraMove:
-                remainingPos = moveStraightTwo(0.175);
+                remainingPos = moveStraightTo(0.175);
 
                 if (Math.abs(remainingPos) <= .01 || remainingPos < 0) {
                     omniDrive(0, 0, 0);
@@ -113,7 +113,7 @@ public class AutoBasket2024 extends DriveMethods {
                 }
                 break;
             case MoveBackward:
-                double remaining = moveStraightTwo(-0.5);
+                double remaining = moveStraightTo(-0.5);
 
                 if (Math.abs(remaining) <= .01) {
                     omniDrive(0, 0, 0);
@@ -130,7 +130,7 @@ public class AutoBasket2024 extends DriveMethods {
                 }
                 break;
             case TurnTowardsPark:
-                double Turning=TurnStraightTo()
+                double Turning= turnTo(90);
                 if (getStateTime() > 15) {
                     changeState(State.Finished);
                 }
@@ -138,7 +138,7 @@ public class AutoBasket2024 extends DriveMethods {
 
             case Finished:
                 robot.sliderMotor.setPower(0);
-                moveStraightTo(0);
+                strafeTo(0);
                 break;
         }
     }
@@ -158,7 +158,7 @@ public class AutoBasket2024 extends DriveMethods {
         return robot.leftFrontDrive.getCurrentPosition() / robot.TICKS_PER_MM / MM_PER_METER;
     }
 
-    double moveStraightTo(double targetDistance) {
+    double strafeTo(double targetDistance) {
         double distanceTravelled = position();
         double targetPos = stateStartPos + targetDistance;
         double remainingDistance = targetPos - distanceTravelled;
@@ -181,10 +181,10 @@ public class AutoBasket2024 extends DriveMethods {
         return remainingDistance;
     }
 
-    double moveStraightTwo(double targetPos) {
+    double moveStraightTo(double targetDistance) {
         double distanceTravelled = position();
-        double targetPosi = stateStartPos + targetPos;
-        double remainingPos = targetPosi - distanceTravelled;
+        double targetPos = stateStartPos + targetDistance;
+        double remainingPos = targetPos - distanceTravelled;
         double MAX_POWER = .5;
 
         telemetry.addData("remainingDistance", "%.2f", remainingPos);
@@ -204,7 +204,7 @@ public class AutoBasket2024 extends DriveMethods {
         return remainingPos;
     }
 
-    double TurnStraightTo(double tarPos) {
+    double turnTo(double tarPos) {
         double distanceTravelled = position();
         double targetPos = stateStartPos + tarPos;
         double remainingDistance = targetPos - distanceTravelled;
@@ -253,4 +253,3 @@ public class AutoBasket2024 extends DriveMethods {
 //    {
 //        double turnTo(double targetTotalAngle)
 //    }
-}
