@@ -8,6 +8,7 @@ public class AutoBasket2024 extends DriveMethods {
 
     double stateStartTime = -1;
     double stateStartPos = 0;
+    double stateStartAngle = 0;
 
 
     enum State {
@@ -158,6 +159,10 @@ public class AutoBasket2024 extends DriveMethods {
         return robot.leftFrontDrive.getCurrentPosition() / robot.TICKS_PER_MM / MM_PER_METER;
     }
 
+    double angle() {
+        return  robot.imu.getRobotYawPitchRollAngles().getYaw();
+    }
+
     double strafeTo(double targetDistance) {
         double distanceTravelled = position();
         double targetPos = stateStartPos + targetDistance;
@@ -204,16 +209,15 @@ public class AutoBasket2024 extends DriveMethods {
         return remainingPos;
     }
 
-    double turnTo(double tarPos) {
-        double distanceTravelled = position();
-        double targetPos = stateStartPos + tarPos;
-        double remainingDistance = targetPos - distanceTravelled;
+    double turnTo(double targetAngleOffset) {
+        double targetAngle = stateStartAngle + targetAngleOffset;
+        double remainingAngle = targetAngle - angle();
         double MAX_POWER = .5;
 
 
-        telemetry.addData("remainingDistance", "%.2f", remainingDistance);
+        telemetry.addData("remainingDistance", "%.2f", remainingAngle);
 
-        double power = 3 * remainingDistance;
+        double power = 0.0075 * remainingAngle;
 
         if (power < -MAX_POWER) {
             power = -MAX_POWER;
@@ -224,7 +228,7 @@ public class AutoBasket2024 extends DriveMethods {
 
         omniDrive(0, 0, power);
 
-        return remainingDistance;
+        return remainingAngle;
     }
 }
 
