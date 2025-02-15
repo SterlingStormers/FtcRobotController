@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 @TeleOp
-public class TeleOp2024 extends DriveMethods {
+public class TeleOpITD extends DriveMethods {
     boolean wasClawTogglePressed = false;
     double sliderPosition = robot.MIN_SLIDER_TICKS;
     boolean isClawOpen = false;
@@ -22,6 +22,16 @@ if (robot.clawServo.getPosition() >= 1.05) {
     isClawOpen = false;
 }
     }
+
+    
+//            \                            /
+//             \         /^\__/^\        /
+//           \   -------/  *   * \-------    /
+//            ---------|          |----------
+//           ----------|          |----------
+//          /    -------\        /-------     \
+//             /         --------        \
+//            /                           \
 
     @Override
     public void loop() {
@@ -41,7 +51,7 @@ if (robot.clawServo.getPosition() >= 1.05) {
         }
 
         double driveLeftStickY = -driver.left_stick_y;
-        double driveRightStickY = driver.right_stick_y;
+        double driveRightStickY = -driver.right_stick_y;
         double driveLeftStickX = driver.left_stick_x;
         double driveRightStickX = driver.right_stick_x;
 
@@ -55,10 +65,11 @@ if (robot.clawServo.getPosition() >= 1.05) {
         telemetry.addData("Lateral","%.1f", driveLeftStickX);
         telemetry.addData("Yaw","%.1f", driveRightStickX);
 
+
         double wormGearPower = opLeftStickY;
         telemetry.addData("Worm Gear Angle", "%.1f", robot.wormGearAngle());
 
-        // don't allow the worm gear to go up beyond the max limit
+        // Don't allow the worm gear to go up beyond the max limit
         if (robot.wormGearAngle() >= 85 && wormGearPower > 0.0) {
             wormGearPower = 0.0;
         }
@@ -67,8 +78,6 @@ if (robot.clawServo.getPosition() >= 1.05) {
 //            wormGearPower = 0;
 //        }
 
-        robot.wormGear.setPower(wormGearPower);
-
         // When the button "X" is held on the Operator's Controller, then set the slider to it's maximum length, and hold until this is released.
         // Utilize this for faster access to top basket
         // If a is clicked, then the slider is set to it's minimum.
@@ -76,13 +85,9 @@ if (robot.clawServo.getPosition() >= 1.05) {
        if (!operator.x) {
             sliderPosition = sliderPosition + 10.0 * opRightStickY;
        } else if (operator.a) {
-<<<<<<< HEAD
-           sliderPosition = robot.MIN_SLIDER_TICKS
-=======
            sliderPosition = robot.MIN_SLIDER_TICKS;
->>>>>>> parent of 607b8bd (updated autobasket code)
        } else if (operator.right_bumper) {
-           sliderPosition = robot.sliderMotor.setPower(0);
+           robot.sliderMotor.setPower(0);
        } else {
            sliderPosition = robot.MAX_SAFE_SLIDER_TICKS;
         }
@@ -91,22 +96,16 @@ if (robot.clawServo.getPosition() >= 1.05) {
 
         sliderPosition = setSliderAndReturnConstraint(sliderPosition);
 
-       //Set the worm gear tol -7 degrees
+       //Set the worm gear to -7 degrees
 
-        if (operator.right_bumper && operator.left_bumper && driver.right_bumper && driver.left_bumper) {
-<<<<<<< HEAD
-            robot.wormGear.setPower(-1);
-            if (robot.wormGearAngle() == -7) {
-                wormGearPower = 0;
-=======
-            if (robot.wormGearAngle() <= -7) {
-                robot.wormGear.setPower(0);
-            }
-            else {
-                robot.wormGear.setPower(-1);
->>>>>>> parent of 607b8bd (updated autobasket code)
-            }
-        }
+//        if (operator.right_bumper && operator.left_bumper && driver.right_bumper && driver.left_bumper) {
+//            robot.wormGear.setPower(-1);
+//            if (robot.wormGearAngle() <= 20) {
+//                robot.wormGear.setPower(0);
+//            }
+//        }
+
+
         telemetry.addData("Lift","%.1f", opLeftStickY);
 
         // let the next frame know if the toggle was pressed

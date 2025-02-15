@@ -19,6 +19,7 @@ public abstract class DriveMethods extends OpMode {
         double rightFrontPower = axial - lateral - yaw;
         double leftBackPower = axial - lateral + yaw;
         double rightBackPower = axial + lateral - yaw;
+        double wormGearPower = -gamepad2.left_stick_y;
         max = Math.max(Math.abs(leftFrontPower), Math.abs(rightFrontPower));
         max = Math.max(max, Math.abs(leftBackPower));
         max = Math.max(max, Math.abs(rightBackPower));
@@ -47,15 +48,15 @@ public abstract class DriveMethods extends OpMode {
             robot.leftBackDrive.setPower(leftBackPower);
             robot.rightBackDrive.setPower(rightBackPower);
         }
-        boolean slowMode2 = gamepad2.right_bumper;
-        double SLOW_2_MODE_SPEED = .15;
+        boolean slowMode2 = gamepad2.left_bumper;
+        double SLOW_2_MODE_SPEED = .25;
         if (slowMode2) {
-            robot.wormGear.setPower(SLOW_2_MODE_SPEED * robot.wormGear.getPower());
+            robot.wormGear.setPower(SLOW_2_MODE_SPEED * wormGearPower);
 
         } else {
-            robot.wormGear.setPower(robot.wormGear.getPower());
+            robot.wormGear.setPower(wormGearPower);
         }
-    }
+}
 
     /**
      * Changes the slider's target position.
@@ -66,7 +67,7 @@ public abstract class DriveMethods extends OpMode {
      */
     double setSliderAndReturnConstraint(double targetPosition) {
         double position = targetPosition;
-//https://www.youtube.com/watch?v=dQw4w9WgXcQ
+
         position = Math.min(position, robot.upperMaxLegalSliderLength());
         position = Math.min(position, robot.MAX_SAFE_SLIDER_TICKS);
         position = Math.max(position, robot.MIN_SLIDER_TICKS);
@@ -78,6 +79,7 @@ public abstract class DriveMethods extends OpMode {
 
         return position;
     }
+
 }
 
 //Yaw=turn, Lateral=SideToSide,  Axial is Forward
