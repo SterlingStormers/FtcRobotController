@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-public class AutoHang2025 extends DriveMethods {
+public class AutoHangITD extends DriveMethods {
 
     enum State {
         Unstarted,
@@ -48,7 +48,7 @@ public class AutoHang2025 extends DriveMethods {
                 if (robot.wormGearAngle() >= 50) {
                     robot.wormGear.setPower(0);
 
-                    changeState(AutoHang2025.State.ExtendSlider);
+                    changeState(AutoHangITD.State.ExtendSlider);
                 }
                 break;
             case ExtendSlider:
@@ -74,14 +74,14 @@ public class AutoHang2025 extends DriveMethods {
                 break;
             case OpenClaw:
                 robot.clawServo.setPosition(robot.CLAW_OPEN);
-                changeState(AutoHang2025.State.Finished);
+                changeState(AutoHangITD.State.Finished);
                 break;
             case Finished:
                 omniDrive(0, 0, 0);
                 break;
         }
     }
-    void changeState(AutoHang2025.State nextState) {
+    void changeState(AutoHangITD.State nextState) {
         currentState = nextState;
         stateStartTime = getRuntime();
         stateStartPos = position();

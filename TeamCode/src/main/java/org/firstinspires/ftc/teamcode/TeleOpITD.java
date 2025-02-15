@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 @TeleOp
-public class TeleOp2024 extends DriveMethods {
+public class TeleOpITD extends DriveMethods {
     boolean wasClawTogglePressed = false;
     double sliderPosition = robot.MIN_SLIDER_TICKS;
     boolean isClawOpen = false;

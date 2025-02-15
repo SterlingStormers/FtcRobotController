@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 @Autonomous
-public class AutoBasket2024 extends DriveMethods {
+public class AutoSpecimenITD extends DriveMethods {
 
     double stateStartTime = -1;
     double stateStartPos = 0;
