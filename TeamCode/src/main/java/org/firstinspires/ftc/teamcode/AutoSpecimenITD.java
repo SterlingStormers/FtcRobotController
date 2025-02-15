@@ -12,21 +12,19 @@ public class AutoSpecimenITD extends DriveMethods {
 
 
     enum State {
-        Finished,
         Unstarted,
-        TightenClaw,
-        StrafeRight,
-        Wait,
+        MoveForward,
+        StrafeLeft,
         RaiseArm,
         ExtendSlider,
-        MoveForward,
-        OpenClaw,
-        WaitThree,
-        WaitTwo,
-        MoveBackward,
         ExtraMove,
-        LowerSlider,
-        TurnTowardsPark,
+        LowerArm,
+        OpenClaw,
+        ExtraRaise,
+        MoveBackward,
+        ExtraLowerArm,
+        Finished,
+
     }
 
     State currentState = State.Unstarted;
@@ -43,102 +41,109 @@ public class AutoSpecimenITD extends DriveMethods {
         telemetry.addData("encoder", "%.1f", (double) robot.leftFrontDrive.getCurrentPosition());
         telemetry.addData("imu", "%.1f", robot.imu.getRobotYawPitchRollAngles().getYaw());
         telemetry.addData("state", currentState);
-        switch (currentState) {
-            case Unstarted:
-                changeState(State.TightenClaw);
-                break;
-            case TightenClaw:
-                robot.clawServo.setPosition(1.20);
-                changeState(State.StrafeRight);
-                break;
-            case StrafeRight:
-                double remainingDistance = strafeTo(.325);
 
-                if (Math.abs(remainingDistance) <= .01) {
-                    changeState(State.Wait);
-                }
+        switch (currentState) {
+
+            case Unstarted:
+                changeState(State.MoveForward);
                 break;
-            case Wait:
-                if (getStateTime() >= 4) {
-                    omniDrive(0, 0, 0);
-                    changeState(State.MoveForward);
-                }
-                break;
+
             case MoveForward:
-                double remainingPos = moveStraightTo(0.175);
+                double remainingPos = moveStraightTo(0);
 
                 if (Math.abs(remainingPos) <= .01 || remainingPos < 0) {
                     omniDrive(0, 0, 0);
-                    changeState(State.WaitTwo);
+                    changeState(State.StrafeLeft);
                 }
                 break;
-            case WaitTwo:
-                if (getStateTime() >= 4) {
-                    omniDrive(0, 0, 0);
+
+
+            case StrafeLeft:
+                double remainingDistance = strafeTo(-0);
+
+                if (Math.abs(remainingDistance) <= .01) {
                     changeState(State.RaiseArm);
                 }
                 break;
-            case RaiseArm:
-                robot.wormGear.setPower(0.5);
 
-                if (robot.wormGearAngle() >= 78) {
+
+            case RaiseArm:
+                robot.wormGear.setPower(0.0);
+
+                if (robot.wormGearAngle() >= 0) {
                     robot.wormGear.setPower(0);
 
-                    changeState(State.ExtendSlider);
+                    changeState(AutoSpecimenITD.State.ExtendSlider);
                 }
                 break;
+
             case ExtendSlider:
-                robot.sliderMotor.setPower(0.5);
+                robot.sliderMotor.setPower(0.0);
                 robot.sliderMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 setSliderAndReturnConstraint(2700);
 
                 if (robot.sliderMotor.getCurrentPosition() >= 2700) {
-                    changeState(State.ExtraMove);
+                    changeState(AutoSpecimenITD.State.ExtraMove);
                 }
                 break;
+
+
             case ExtraMove:
-                remainingPos = moveStraightTo(0.175);
+                remainingPos = moveStraightTo(0.0);
 
                 if (Math.abs(remainingPos) <= .01 || remainingPos < 0) {
                     omniDrive(0, 0, 0);
+                    changeState(State.LowerArm);
+                }
+                break;
+
+
+            case LowerArm:
+                robot.wormGear.setPower(0.0);
+
+                if (robot.wormGearAngle() >= 78) {
+                    robot.wormGear.setPower(0);
+
                     changeState(State.OpenClaw);
                 }
                 break;
+
             case OpenClaw:
                 robot.clawServo.setPosition(robot.CLAW_OPEN);
-                changeState(State.WaitThree);
+                changeState(State.ExtraRaise);
                 break;
-            case WaitThree:
-                if (getStateTime() > 5) {
+
+            case ExtraRaise:
+                robot.wormGear.setPower(0.0);
+
+                if (robot.wormGearAngle() >= 0) {
+                    robot.wormGear.setPower(0);
+
                     changeState(State.MoveBackward);
                 }
                 break;
+
             case MoveBackward:
-                double remaining = moveStraightTo(-0.5);
+                double remaining = moveStraightTo(-0.0);
 
                 if (Math.abs(remaining) <= .01) {
                     omniDrive(0, 0, 0);
-                    changeState(State.LowerSlider);
+                    changeState(AutoSpecimenITD.State.ExtraLowerArm);
                 }
                 break;
-            case LowerSlider:
-                robot.sliderMotor.setPower(0.5);
-                robot.sliderMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                setSliderAndReturnConstraint(11);
 
-                if (robot.sliderMotor.getCurrentPosition() <= 11) {
-                    changeState(State.TurnTowardsPark);
-                }
-                break;
-            case TurnTowardsPark:
-                double Turning= turnTo(90);
-                if (getStateTime() > 15) {
+            case ExtraLowerArm:
+                robot.wormGear.setPower(0.0);
+
+                if (robot.wormGearAngle() >= 78) {
+                    robot.wormGear.setPower(0);
+
                     changeState(State.Finished);
                 }
                 break;
 
             case Finished:
-                robot.sliderMotor.setPower(0);
+                robot.wormGear.setPower(0);
                 strafeTo(0);
                 break;
         }

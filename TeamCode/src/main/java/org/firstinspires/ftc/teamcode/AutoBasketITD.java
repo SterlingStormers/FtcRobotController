@@ -12,7 +12,6 @@ public class AutoBasketITD extends DriveMethods {
 
 
     enum State {
-        Finished,
         Unstarted,
         TightenClaw,
         StrafeRight,
@@ -25,8 +24,9 @@ public class AutoBasketITD extends DriveMethods {
         WaitTwo,
         MoveBackward,
         ExtraMove,
-        LowerSlider,
+        RetractSlider,
         TurnTowardsPark,
+        Finished,
     }
 
     State currentState = State.Unstarted;
@@ -118,10 +118,10 @@ public class AutoBasketITD extends DriveMethods {
 
                 if (Math.abs(remaining) <= .01) {
                     omniDrive(0, 0, 0);
-                    changeState(State.LowerSlider);
+                    changeState(State.RetractSlider);
                 }
                 break;
-            case LowerSlider:
+            case RetractSlider:
                 robot.sliderMotor.setPower(0.5);
                 robot.sliderMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 setSliderAndReturnConstraint(11);
