@@ -13,6 +13,7 @@ public class AutoSpecimenITD extends DriveMethods {
 
     enum State {
         Unstarted,
+        TightenClaw,
         MoveForward,
         StrafeLeft,
         RaiseArm,
@@ -46,6 +47,11 @@ public class AutoSpecimenITD extends DriveMethods {
         switch (currentState) {
 
             case Unstarted:
+                changeState(State.TightenClaw);
+                break;
+
+            case TightenClaw:
+                robot.clawServo.setPosition(1.20);
                 changeState(State.MoveForward);
                 break;
 
@@ -84,9 +90,9 @@ public class AutoSpecimenITD extends DriveMethods {
             case ExtendSlider:
                 robot.sliderMotor.setPower(0.8);
                 robot.sliderMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                setSliderAndReturnConstraint(210);
-
-                if (robot.sliderMotor.getCurrentPosition() >= 210) {
+                setSliderAndReturnConstraint(420);
+//old slider valiue was 210
+                if (robot.sliderMotor.getCurrentPosition() >= 420) {
                     changeState(State.ExtraMove);
                 }
                 break;
@@ -97,7 +103,7 @@ public class AutoSpecimenITD extends DriveMethods {
 
                 if (Math.abs(remainingPos) <= .01) {
                     omniDrive(0, 0, 0);
-                    changeState(State.LowerArm);
+                    changeState(State.ExtraRetractSlider);
                 }
                 break;
 
@@ -114,7 +120,7 @@ public class AutoSpecimenITD extends DriveMethods {
 
 
             case LowerArm:
-                robot.wormGear.setPower(1);
+                robot.wormGear.setPower(-0.7);
 
                 if (robot.wormGearAngle() <= 60) {
                     robot.wormGear.setPower(0);
