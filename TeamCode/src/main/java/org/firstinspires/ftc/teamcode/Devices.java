@@ -33,6 +33,7 @@ public class Devices {
         DcMotorEx rightFrontDrive;
         DcMotorEx rightBackDrive;
         DcMotorEx leftBackDrive;
+        DcMotorEx chainMotor;
         Servo clawServo;
         BHI260IMU imu;
 
@@ -49,6 +50,8 @@ public class Devices {
         rightFrontDrive = hwmap.get(DcMotorEx.class, "rightFront");
         leftBackDrive = hwmap.get(DcMotorEx.class, "leftBack");
         rightBackDrive = hwmap.get(DcMotorEx.class, "rightBack");
+
+        chainMotor = hwmap.get(DcMotorEx.class, "chainMotor");
 
         clawServo = hwmap.get(Servo.class, "clawServo");
 
