@@ -23,6 +23,16 @@ if (robot.clawServo.getPosition() >= 1.05) {
 }
     }
 
+    
+//            \                            /
+//             \         /^\__/^\        /
+//           \   -------/  *   * \-------    /
+//            ---------|          |----------
+//           ----------|          |----------
+//          /    -------\        /-------     \
+//             /         --------        \
+//            /                           \
+
     @Override
     public void loop() {
         Gamepad driver = gamepad1;
@@ -86,20 +96,6 @@ if (robot.clawServo.getPosition() >= 1.05) {
            sliderPosition = robot.MAX_SAFE_SLIDER_TICKS;
         }
 
-        boolean opArrowUp = gamepad2.dpad_up;
-        boolean opArrowDown = gamepad2.dpad_down;
-
-        if (opArrowUp) {
-            robot.chainMotor.setPower(0.65);
-        }
-        else if (opArrowDown) {
-            robot.chainMotor.setPower(-0.25);
-        }
-        else {
-            robot.chainMotor.setPower(0);
-        }
-
-
        // End "X" & "A" Button Code
 
         sliderPosition = setSliderAndReturnConstraint(sliderPosition);
@@ -108,7 +104,7 @@ if (robot.clawServo.getPosition() >= 1.05) {
 
 //        if (operator.right_bumper && operator.left_bumper && driver.right_bumper && driver.left_bumper) {
 //            robot.wormGear.setPower(-1);
-//            if (robot.wormGearAngle() <= -7) {
+//            if (robot.wormGearAngle() <= 20) {
 //                robot.wormGear.setPower(0);
 //            }
 //        }

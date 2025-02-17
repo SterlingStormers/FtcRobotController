@@ -40,7 +40,7 @@ public class Devices {
     public void init(HardwareMap hwmap) {
 
         wormGear = hwmap.get(DcMotorEx.class, "wormGear");
-        chainMotor = hwmap.get(DcMotorEx.class, "chainMotor");
+
         imu = hwmap.get(BHI260IMU.class, "imu");
         imu.initialize();
 
