@@ -33,13 +33,14 @@ public class Devices {
         DcMotorEx rightFrontDrive;
         DcMotorEx rightBackDrive;
         DcMotorEx leftBackDrive;
+        DcMotorEx chainMotor;
         Servo clawServo;
         BHI260IMU imu;
 
     public void init(HardwareMap hwmap) {
 
         wormGear = hwmap.get(DcMotorEx.class, "wormGear");
-
+        chainMotor = hwmap.get(DcMotorEx.class, "chainMotor");
         imu = hwmap.get(BHI260IMU.class, "imu");
         imu.initialize();
 
