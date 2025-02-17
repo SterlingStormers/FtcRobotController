@@ -31,12 +31,16 @@ if (robot.clawServo.getPosition() >= 1.05) {
 
         boolean isClawTogglePressed = operator.b;
         if (isClawTogglePressed && !wasClawTogglePressed) {
-            if (isClawOpen) {
-                robot.clawServo.setPosition(robot.CLAW_CLOSED);
-                isClawOpen = false;
+            if (operator.y) {
+                robot.clawServo.setPosition(robot.CLAW_EXOPEN);
             } else {
-                robot.clawServo.setPosition(robot.CLAW_OPEN);
-                isClawOpen = true;
+                if (isClawOpen) {
+                    robot.clawServo.setPosition(robot.CLAW_CLOSED);
+                    isClawOpen = false;
+                } else {
+                    robot.clawServo.setPosition(robot.CLAW_OPEN);
+                    isClawOpen = true;
+                }
             }
         }
 

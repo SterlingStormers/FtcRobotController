@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class Devices {
     final double CLAW_OPEN = 0.750;
     final double CLAW_CLOSED = 1.05;
+    final double CLAW_EXOPEN = 0.650; //may be subject to change
 
         final double MIN_SLIDER_TICKS = 10; // chosen just to be safe
 
@@ -50,6 +51,8 @@ public class Devices {
         rightFrontDrive = hwmap.get(DcMotorEx.class, "rightFront");
         leftBackDrive = hwmap.get(DcMotorEx.class, "leftBack");
         rightBackDrive = hwmap.get(DcMotorEx.class, "rightBack");
+
+        chainMotor = hwmap.get(DcMotorEx.class, "chainMotor");
 
         clawServo = hwmap.get(Servo.class, "clawServo");
 

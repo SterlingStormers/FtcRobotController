@@ -43,10 +43,14 @@ public class MotorIdentifierTeleop extends DriveMethods {
         } else if (testingMotor == 4) {
             motor = robot.sliderMotor;
             name = "sliderMotor";
-        } else {
+        } else if (testingMotor == 5) {
             name = "wormGear";
             motor = robot.wormGear;
+        } else if (testingMotor >= 6){
+            name = "chainMotor";
+            motor = robot.chainMotor;
         }
+
 
         double power = -gamepad1.left_stick_y;
         motor.setPower(power);
