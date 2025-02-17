@@ -52,7 +52,7 @@ public class AutoBasketITD extends DriveMethods {
                 changeState(State.StrafeRight);
                 break;
             case StrafeRight:
-                double remainingDistance = strafeTo(.325);
+                double remainingDistance = strafeTo(.275);
 
                 if (Math.abs(remainingDistance) <= .01) {
                     changeState(State.Wait);

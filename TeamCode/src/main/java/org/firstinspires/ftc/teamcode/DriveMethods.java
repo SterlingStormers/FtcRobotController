@@ -20,8 +20,11 @@ public abstract class DriveMethods extends OpMode {
         double leftBackPower = axial - lateral + yaw;
         double rightBackPower = axial + lateral - yaw;
         double wormGearPower = -gamepad2.left_stick_y;
+<<<<<<< HEAD
         boolean chainMotorUp = gamepad1.dpad_up;
         boolean chainMotorDown = gamepad1.dpad_up;
+=======
+>>>>>>> parent of ab77cb7 (added chain motor)
         max = Math.max(Math.abs(leftFrontPower), Math.abs(rightFrontPower));
         max = Math.max(max, Math.abs(leftBackPower));
         max = Math.max(max, Math.abs(rightBackPower));
@@ -58,17 +61,7 @@ public abstract class DriveMethods extends OpMode {
         } else {
             robot.wormGear.setPower(wormGearPower);
         }
-
-
-
-        if (chainMotorUp) {
-            robot.chainMotor.setPower(0.75);
-        } else if (chainMotorDown) {
-            robot.chainMotor.setPower(0.75);
-        } else {
-            robot.chainMotor.setPower(0);
-        }
-    }
+}
 
     /**
      * Changes the slider's target position.
