@@ -20,8 +20,8 @@ public abstract class DriveMethods extends OpMode {
         double leftBackPower = axial - lateral + yaw;
         double rightBackPower = axial + lateral - yaw;
         double wormGearPower = -gamepad2.left_stick_y;
-        boolean chainMotorUp = gamepad2.dpad_up;
-        boolean chainMotorDown = gamepad2.dpad_up;
+        boolean chainMotorUp = gamepad1.dpad_up;
+        boolean chainMotorDown = gamepad1.dpad_up;
         max = Math.max(Math.abs(leftFrontPower), Math.abs(rightFrontPower));
         max = Math.max(max, Math.abs(leftBackPower));
         max = Math.max(max, Math.abs(rightBackPower));
