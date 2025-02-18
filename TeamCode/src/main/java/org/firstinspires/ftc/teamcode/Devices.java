@@ -34,6 +34,7 @@ public class Devices {
         DcMotorEx rightFrontDrive;
         DcMotorEx rightBackDrive;
         DcMotorEx leftBackDrive;
+        DcMotorEx chainMotor;
         Servo clawServo;
         BHI260IMU imu;
 

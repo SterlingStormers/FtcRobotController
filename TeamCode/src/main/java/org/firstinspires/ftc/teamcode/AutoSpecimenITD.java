@@ -80,7 +80,7 @@ public class AutoSpecimenITD extends DriveMethods {
                 // make sure to stay still
                 moveStraightTo(0);
 
-                if (robot.wormGearAngle() >= 74.2) {
+                if (robot.wormGearAngle() >= 65) {
                     robot.wormGear.setPower(0);
 
                     changeState(State.ExtendSlider);
@@ -90,16 +90,15 @@ public class AutoSpecimenITD extends DriveMethods {
             case ExtendSlider:
                 robot.sliderMotor.setPower(0.8);
                 robot.sliderMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                setSliderAndReturnConstraint(420);
-//old slider valiue was 210
-                if (robot.sliderMotor.getCurrentPosition() >= 420) {
+                setSliderAndReturnConstraint(600);
+                if (robot.sliderMotor.getCurrentPosition() >= 600) {
                     changeState(State.ExtraMove);
                 }
                 break;
 
 
             case ExtraMove:
-                remainingPos = moveStraightTo(0.2794);
+                remainingPos = moveStraightTo(0.265);
 
                 if (Math.abs(remainingPos) <= .01) {
                     omniDrive(0, 0, 0);

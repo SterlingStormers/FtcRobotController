@@ -26,6 +26,7 @@ public class AutoBasketITD extends DriveMethods {
         ExtraMove,
         RetractSlider,
         TurnTowardsPark,
+        WaitFour,
         Finished,
     }
 
@@ -59,7 +60,7 @@ public class AutoBasketITD extends DriveMethods {
                 }
                 break;
             case Wait:
-                if (getStateTime() >= 4) {
+                if (getStateTime() >= 1) {
                     omniDrive(0, 0, 0);
                     changeState(State.MoveForward);
                 }
@@ -73,7 +74,7 @@ public class AutoBasketITD extends DriveMethods {
                 }
                 break;
             case WaitTwo:
-                if (getStateTime() >= 4) {
+                if (getStateTime() >= 1) {
                     omniDrive(0, 0, 0);
                     changeState(State.RaiseArm);
                 }
@@ -101,15 +102,19 @@ public class AutoBasketITD extends DriveMethods {
 
                 if (Math.abs(remainingPos) <= .01 || remainingPos < 0) {
                     omniDrive(0, 0, 0);
-                    changeState(State.OpenClaw);
+                    changeState(State.WaitThree);
                 }
                 break;
+            case WaitThree:
+                if (getStateTime() > 2) {
+                    changeState(State.OpenClaw);
+                }
             case OpenClaw:
                 robot.clawServo.setPosition(robot.CLAW_OPEN);
-                changeState(State.WaitThree);
+                changeState(State.WaitFour);
                 break;
-            case WaitThree:
-                if (getStateTime() > 5) {
+            case WaitFour:
+                if (getStateTime() > 2) {
                     changeState(State.MoveBackward);
                 }
                 break;
@@ -131,15 +136,15 @@ public class AutoBasketITD extends DriveMethods {
                 }
                 break;
             case TurnTowardsPark:
-                double Turning= turnTo(90);
-                if (getStateTime() > 15) {
+                double Turning = turnTo(90);
+                if (Math.abs(Turning) <= .01) {
                     changeState(State.Finished);
                 }
                 break;
 
             case Finished:
                 robot.sliderMotor.setPower(0);
-                strafeTo(0);
+                moveStraightTo(0);
                 break;
         }
     }
