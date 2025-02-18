@@ -66,7 +66,7 @@ public class AutoSpecimenITD extends DriveMethods {
 
 
             case StrafeLeft:
-                double remainingDistance = strafeTo(-0.409575);
+                double remainingDistance = strafeTo(-0.25);
 
                 if (Math.abs(remainingDistance) <= .01) {
                     changeState(State.RaiseArm);
@@ -75,10 +75,11 @@ public class AutoSpecimenITD extends DriveMethods {
 
 
             case RaiseArm:
-                robot.wormGear.setPower(1);
 
                 // make sure to stay still
                 moveStraightTo(0);
+
+                robot.wormGear.setPower(1);
 
                 if (robot.wormGearAngle() >= 65) {
                     robot.wormGear.setPower(0);
@@ -90,8 +91,8 @@ public class AutoSpecimenITD extends DriveMethods {
             case ExtendSlider:
                 robot.sliderMotor.setPower(0.8);
                 robot.sliderMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                setSliderAndReturnConstraint(600);
-                if (robot.sliderMotor.getCurrentPosition() >= 600) {
+                setSliderAndReturnConstraint(800);
+                if (robot.sliderMotor.getCurrentPosition() >= 800) {
                     changeState(State.ExtraMove);
                 }
                 break;
@@ -121,7 +122,7 @@ public class AutoSpecimenITD extends DriveMethods {
             case LowerArm:
                 robot.wormGear.setPower(-0.7);
 
-                if (robot.wormGearAngle() <= 60) {
+                if (robot.wormGearAngle() <= 50) {
                     robot.wormGear.setPower(0);
 
                     changeState(State.OpenClaw);
@@ -130,37 +131,37 @@ public class AutoSpecimenITD extends DriveMethods {
 
             case OpenClaw:
                 robot.clawServo.setPosition(robot.CLAW_OPEN);
-                changeState(State.Finished);
+                changeState(State.ExtraRaise);
                 break;
 
-//            case ExtraRaise:
-//                robot.wormGear.setPower(0.0);
-//
-//                if (robot.wormGearAngle() >= 0) {
-//                    robot.wormGear.setPower(0);
-//
-//                    changeState(State.MoveBackward);
-//                }
-//                break;
-//
-//            case MoveBackward:
-//                double remaining = moveStraightTo(-0.0);
-//
-//                if (Math.abs(remaining) <= .01) {
-//                    omniDrive(0, 0, 0);
-//                    changeState(State.ExtraLowerArm);
-//                }
-//                break;
-//
-//            case ExtraLowerArm:
-//                robot.wormGear.setPower(0.0);
-//
-//                if (robot.wormGearAngle() >= 78) {
-//                    robot.wormGear.setPower(0);
-//
-//                    changeState(State.Finished);
-//                }
-//                break;
+            case ExtraRaise:
+                robot.wormGear.setPower(0.0);
+
+                if (robot.wormGearAngle() >= 0) {
+                    robot.wormGear.setPower(0);
+
+                    changeState(State.MoveBackward);
+                }
+                break;
+
+            case MoveBackward:
+                double remaining = moveStraightTo(-0.0);
+
+                if (Math.abs(remaining) <= .01) {
+                    omniDrive(0, 0, 0);
+                    changeState(State.ExtraLowerArm);
+                }
+                break;
+
+            case ExtraLowerArm:
+                robot.wormGear.setPower(0.0);
+
+                if (robot.wormGearAngle() >= 78) {
+                    robot.wormGear.setPower(0);
+
+                    changeState(State.Finished);
+                }
+                break;
 
             case Finished:
                 robot.wormGear.setPower(0);
