@@ -111,6 +111,7 @@ if (robot.clawServo.getPosition() >= 1.05) {
 
        // End "X" & "A" Button Code
 
+        
         sliderPosition = setSliderAndReturnConstraint(sliderPosition);
 
        //Set the worm gear to -7 degrees
