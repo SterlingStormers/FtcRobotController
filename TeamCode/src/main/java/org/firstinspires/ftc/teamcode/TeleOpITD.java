@@ -96,6 +96,19 @@ if (robot.clawServo.getPosition() >= 1.05) {
            sliderPosition = robot.MAX_SAFE_SLIDER_TICKS;
         }
 
+        boolean drArrowUp = gamepad1.dpad_up;
+        boolean drArrowDown = gamepad1.dpad_down;
+
+        if (drArrowUp) {
+            robot.chainMotor.setPower(0.65);
+        }
+        else if (drArrowDown) {
+            robot.chainMotor.setPower(-0.25);
+        }
+        else {
+            robot.chainMotor.setPower(0);
+        }
+
        // End "X" & "A" Button Code
 
         sliderPosition = setSliderAndReturnConstraint(sliderPosition);
